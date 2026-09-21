@@ -89,9 +89,9 @@ export default function Header() {
         </h1>
         <Button
           onClick={() => setIsDarkMode((currentMode) => !currentMode)}
-          variant="ghost"
+          variant="ghost-inverse"
           size="icon"
-          className="ml-auto text-storymixer-white"
+          className="ml-auto"
           aria-label={
             isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
           }

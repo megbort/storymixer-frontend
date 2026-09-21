@@ -1,15 +1,33 @@
 import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
+const cardVariants = cva(
+  'bg-card text-card-foreground flex flex-col gap-4 rounded-xl py-6 shadow-sm dark:shadow-card-dark',
+  {
+    variants: {
+      variant: {
+        default: '',
+        media:
+          'py-0 overflow-hidden transition-shadow duration-300 group-hover:shadow-lg',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+)
+
+function Card({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<'div'> & VariantProps<typeof cardVariants>) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        'bg-card text-card-foreground flex flex-col gap-4 rounded-xl py-6 shadow-sm dark:shadow-[0_4px_14px_rgba(255,255,255,0.10)]',
-        className,
-      )}
+      className={cn(cardVariants({ variant }), className)}
       {...props}
     />
   )
@@ -20,7 +38,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="card-header"
       className={cn(
-        '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
+        '@container/card-header grid auto-rows-min items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-fill-auto [.border-b]:pb-6',
         className,
       )}
       {...props}
@@ -28,11 +46,27 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
+const cardTitleVariants = cva('leading-none font-semibold', {
+  variants: {
+    size: {
+      default: '',
+      lg: 'text-lg',
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+})
+
+function CardTitle({
+  className,
+  size,
+  ...props
+}: React.ComponentProps<'div'> & VariantProps<typeof cardTitleVariants>) {
   return (
     <div
       data-slot="card-title"
-      className={cn('leading-none font-semibold', className)}
+      className={cn(cardTitleVariants({ size }), className)}
       {...props}
     />
   )

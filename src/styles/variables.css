@@ -9,6 +9,7 @@
   --storymixer-white: oklch(0.984 0.003 286.32);
   --storymixer-grey: oklch(79.208% 0.00009 271.152);
   --storymixer-grey-alt: oklch(60.208% 0.00009 271.152);
+  --storymixer-grey-dark: oklch(0.37 0.005 286.32);
   --storymixer-error: oklch(53.478% 0.17632 22.984);
   --storymixer-error-alt: oklch(43.738% 0.16171 25.004);
 
@@ -95,6 +96,7 @@
   --color-storymixer-white: var(--storymixer-white);
   --color-storymixer-grey: var(--storymixer-grey);
   --color-storymixer-grey-alt: var(--storymixer-grey-alt);
+  --color-storymixer-grey-dark: var(--storymixer-grey-dark);
   --color-storymixer-error: var(--storymixer-error);
   --color-storymixer-error-alt: var(--storymixer-error-alt);
 
@@ -122,6 +124,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --shadow-card-dark: 0 4px 14px rgb(255 255 255 / 0.1);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

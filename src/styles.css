@@ -18,3 +18,7 @@ body {
     @apply flex items-center gap-3 p-3 rounded-lg hover:bg-storymixer-accent hover:text-storymixer-primary-dark transition-colors mb-2;
   }
 }
+
+@utility grid-cols-fill-auto {
+  grid-template-columns: 1fr auto;
+}

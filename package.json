@@ -9,6 +9,7 @@
     "test": "vitest run",
     "format": "prettier",
     "check": "prettier --write .",
+    "lint": "oxlint",
     "storybook": "set DEVTOOLS_PORT=42200 && storybook dev -p 6008",
     "build-storybook": "storybook build"
   },
@@ -45,6 +46,7 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "@shadcn/lint": "^0.1.5",
     "@tanstack/devtools-event-client": "^0.4.0",
     "@tanstack/devtools-vite": "^0.3.11",
     "@testing-library/dom": "^10.4.0",
@@ -54,6 +56,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "jsdom": "^27.0.0",
+    "oxlint": "^1.85.0",
     "prettier": "^3.5.3",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",

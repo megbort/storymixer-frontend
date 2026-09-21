@@ -20,7 +20,7 @@ export const Default: Story = {
     title: 'User Profile',
     children: (
       <div className="space-y-4">
-        <p className="text-gray-700 dark:text-gray-300">
+        <p className="text-muted-foreground">
           This is a simple dialog component with a title and content area.
         </p>
       </div>
@@ -33,7 +33,7 @@ export const WithFooter: Story = {
     title: 'Confirm Action',
     children: (
       <div className="space-y-4">
-        <p className="text-gray-700 dark:text-gray-300">
+        <p className="text-muted-foreground">
           Are you sure you want to proceed with this action?
         </p>
       </div>
@@ -53,23 +53,23 @@ export const Form: Story = {
     children: (
       <div className="space-y-4 min-w-80">
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label className="text-sm font-medium text-foreground">
             Email
           </label>
           <input
             type="email"
             placeholder="you@example.com"
-            className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="px-4 py-2 rounded-lg border border-border dark:border-storymixer-grey-dark bg-background text-foreground"
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label className="text-sm font-medium text-foreground">
             Password
           </label>
           <input
             type="password"
             placeholder="••••••••"
-            className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="px-4 py-2 rounded-lg border border-border dark:border-storymixer-grey-dark bg-background text-foreground"
           />
         </div>
       </div>

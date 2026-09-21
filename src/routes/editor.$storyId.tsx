@@ -147,7 +147,7 @@ function EditorComponent() {
                 onChange={(event) =>
                   handleInputChange(input.id, event.target.value)
                 }
-                className={`truncate ${errors[input.id] ? 'border-storymixer-error' : ''}`}
+                aria-invalid={!!errors[input.id]}
               />
               {errors[input.id] && (
                 <p className="text-storymixer-error text-sm">

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Card, CardContent, CardTitle } from './card'
+import { Card, CardTitle } from './card'
 
 interface CardButtonProps {
   image: string
@@ -15,10 +15,9 @@ export const CardButton: React.FC<CardButtonProps> = ({
   <button
     type="button"
     onClick={onClick}
-    className="group p-0 cursor-pointer w-72 transition-transform duration-300 hover:scale-103"
-    style={{ position: 'relative' }}
+    className="group relative p-0 cursor-pointer w-72 transition-transform duration-300 hover:scale-103"
   >
-    <Card className="overflow-hidden p-0 flex flex-col h-full relative transition-shadow duration-300 group-hover:shadow-lg">
+    <Card variant="media" className="flex flex-col h-full relative">
       <div className="relative w-full">
         <img
           src={image}
@@ -26,11 +25,11 @@ export const CardButton: React.FC<CardButtonProps> = ({
           className="w-full h-48 object-cover rounded-t-xl"
         />
       </div>
-      <CardContent className="flex-1 flex flex-col justify-center items-center pt-0 pb-4 px-0">
-        <CardTitle className="text-lg font-semibold text-center">
+      <div className="flex flex-1 flex-col items-center justify-center pb-4">
+        <CardTitle size="lg" className="text-center">
           {title}
         </CardTitle>
-      </CardContent>
+      </div>
       <div className="absolute inset-0 z-10 flex items-center justify-center bg-storymixer-primary-dark/60 opacity-0 transition-opacity duration-300 rounded-xl pointer-events-none group-hover:opacity-100">
         <span className="text-storymixer-white text-lg font-semibold px-4 text-center">
           Start story

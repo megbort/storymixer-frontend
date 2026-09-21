@@ -236,7 +236,7 @@ function ResultsComponent() {
         </div>
       </div>
 
-      <div className="border-t border-gray-200 pt-8 mt-16">
+      <div className="border-t border-border pt-8 mt-16">
         <p className="text-xs text-storymixer-grey mb-4 uppercase tracking-wide">
           Your inputs
         </p>
@@ -246,7 +246,7 @@ function ResultsComponent() {
               <p className="font-semibold text-storymixer-grey mb-1">
                 {input.label}
               </p>
-              <p className="text-storymixer-foreground text-sm">
+              <p className="text-foreground text-sm">
                 {formValues[input.id]}
               </p>
             </div>

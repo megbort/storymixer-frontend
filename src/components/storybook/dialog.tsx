@@ -15,16 +15,16 @@ export const Dialog: React.FC<DialogProps> = ({
 }) => {
   return (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden ${className}`}
+      className={`bg-card rounded-xl shadow-2xl border border-border dark:border-storymixer-grey-dark overflow-hidden ${className}`}
     >
-      <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+      <div className="px-6 py-4 border-b border-border dark:border-storymixer-grey-dark">
+        <h2 className="text-xl font-semibold text-foreground">
           {title}
         </h2>
       </div>
       <div className="px-6 py-6">{children}</div>
       {footer && (
-        <div className="px-6 py-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div className="px-6 py-4 bg-muted/20 border-t border-border dark:border-storymixer-grey-dark">
           {footer}
         </div>
       )}
