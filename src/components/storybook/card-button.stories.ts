@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CardButton } from '../ui/card-button'
 
 const meta: Meta<typeof CardButton> = {
@@ -13,7 +13,6 @@ export const Default: Story = {
   args: {
     image: 'https://placehold.co/400x225',
     title: 'Sample Card',
-    description: 'This is a description shown on hover.',
     onClick: () => alert('CardButton clicked!'),
   },
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta = {
   title: 'Design System/Colours',
