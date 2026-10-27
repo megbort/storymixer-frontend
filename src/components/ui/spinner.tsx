@@ -1,10 +1,7 @@
 import { Loader2 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-
-interface SpinnerProps extends React.ComponentProps<'svg'> {
-  size?: 'sm' | 'md' | 'lg'
-}
+import type { SpinnerProps } from '@/types/ui'
 
 const sizeClasses = {
   sm: 'size-4',

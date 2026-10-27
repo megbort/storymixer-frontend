@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { ResolvedColour } from '@/types/storybook'
 
 const meta = {
   title: 'Design System/Colours',
@@ -35,11 +36,6 @@ const colours = [
   { name: 'Error', token: 'error', bg: 'bg-storymixer-error' },
   { name: 'Error Alt', token: 'error-alt', bg: 'bg-storymixer-error-alt' },
 ]
-
-interface ResolvedColour {
-  value: string
-  hex: string
-}
 
 // Let the browser resolve any CSS colour (oklch etc.) to sRGB via a canvas.
 const toHex = (value: string): string => {

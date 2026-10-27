@@ -10,6 +10,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { PageWrapper } from '../components/PageWrapper'
+import { GuestNotice } from '@/components/GuestSaveBanner'
 import { Button } from '@/components/ui/button'
 
 import '@/styles.css'
@@ -42,6 +43,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
       </head>
       <body>
         <Header />
+        <GuestNotice />
         <PageWrapper>{children}</PageWrapper>
         <Footer />
         <TanStackDevtools

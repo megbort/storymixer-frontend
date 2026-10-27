@@ -1,14 +1,5 @@
 import React from 'react'
-
-export interface InputProps {
-  label: string
-  id: string
-  value?: string
-  onChange?: (value: string) => void
-  placeholder?: string
-  required?: boolean
-  className?: string
-}
+import type { InputProps } from '@/types/storybook'
 
 export const Input: React.FC<InputProps> = ({
   label,
@@ -21,10 +12,7 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <label
-        htmlFor={id}
-        className="text-sm font-medium text-foreground"
-      >
+      <label htmlFor={id} className="text-sm font-medium text-foreground">
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </label>

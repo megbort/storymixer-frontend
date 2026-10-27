@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MyStoriesRouteImport } from './routes/my-stories'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as EditorStoryIdRouteImport } from './routes/editor.$storyId'
@@ -17,6 +18,11 @@ import { Route as EditorStoryIdRouteImport } from './routes/editor.$storyId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyStoriesRoute = MyStoriesRouteImport.update({
@@ -37,12 +43,14 @@ const EditorStoryIdRoute = EditorStoryIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/my-stories': typeof MyStoriesRoute
   '/results': typeof ResultsRoute
   '/editor/$storyId': typeof EditorStoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/my-stories': typeof MyStoriesRoute
   '/results': typeof ResultsRoute
   '/editor/$storyId': typeof EditorStoryIdRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/my-stories': typeof MyStoriesRoute
   '/results': typeof ResultsRoute
   '/editor/$storyId': typeof EditorStoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/my-stories' | '/results' | '/editor/$storyId'
+  fullPaths: '/' | '/login' | '/my-stories' | '/results' | '/editor/$storyId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/my-stories' | '/results' | '/editor/$storyId'
-  id: '__root__' | '/' | '/my-stories' | '/results' | '/editor/$storyId'
+  to: '/' | '/login' | '/my-stories' | '/results' | '/editor/$storyId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/my-stories'
+    | '/results'
+    | '/editor/$storyId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
   MyStoriesRoute: typeof MyStoriesRoute
   ResultsRoute: typeof ResultsRoute
   EditorStoryIdRoute: typeof EditorStoryIdRoute
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-stories': {
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
   MyStoriesRoute: MyStoriesRoute,
   ResultsRoute: ResultsRoute,
   EditorStoryIdRoute: EditorStoryIdRoute,

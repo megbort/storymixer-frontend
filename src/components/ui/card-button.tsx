@@ -1,11 +1,6 @@
 import * as React from 'react'
 import { Card, CardTitle } from './card'
-
-interface CardButtonProps {
-  image: string
-  title: string
-  onClick?: () => void
-}
+import type { CardButtonProps } from '@/types/ui'
 
 export const CardButton: React.FC<CardButtonProps> = ({
   image,

@@ -21,3 +21,12 @@ export interface StoryInput {
 }
 
 export type StoryTemplatePart = string | { inputId: string }
+
+export interface SavedStory {
+  id: string
+  storyId: string
+  title: string
+  storyText: string
+  formValues: Record<string, string>
+  createdAt: number
+}

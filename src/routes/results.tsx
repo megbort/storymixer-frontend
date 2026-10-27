@@ -5,12 +5,10 @@ import { STORIES } from '@/data/stories'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { ArrowLeft, BookOpen } from 'lucide-react'
+import { getGuestStories, getStorySaveKey } from '@/lib/guestStories'
 
 const getImageStorageKey = (storyId: string, storyText: string) =>
   `storyMixer:image:${storyId}:${storyText}`
-
-const getStorySaveKey = (storyId: string, storyText: string) =>
-  `storyMixer:saved:${storyId}:${storyText}`
 
 export const Route = createFileRoute('/results')({
   validateSearch: (search) => ({
@@ -45,19 +43,17 @@ function ResultsComponent() {
   const saveNewStoryToSession = () => {
     if (!isNewStory || !story || hasSaved.current) return
 
+    const createdStories = getGuestStories()
+
     const storySaveKey = getStorySaveKey(storyId, storyText)
     if (localStorage.getItem(storySaveKey)) {
       hasSaved.current = true
       return
     }
 
-    const createdStories = JSON.parse(
-      localStorage.getItem('storyMixer:createdStories') || '[]',
-    )
-
     if (
       createdStories.some(
-        (existing: { storyId: string; storyText: string }) =>
+        (existing) =>
           existing.storyId === storyId && existing.storyText === storyText,
       )
     ) {

@@ -2,15 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, Trash2 } from 'lucide-react'
-
-interface SavedStory {
-  id: string
-  storyId: string
-  title: string
-  storyText: string
-  formValues: Record<string, string>
-  createdAt: number
-}
+import { getGuestStories } from '@/lib/guestStories'
+import type { SavedStory } from '@/types/story'
 
 export const Route = createFileRoute('/my-stories')({
   component: RouteComponent,
@@ -21,10 +14,7 @@ function RouteComponent() {
   const [stories, setStories] = useState<SavedStory[]>([])
 
   useEffect(() => {
-    const saved = localStorage.getItem('storyMixer:createdStories')
-    if (saved) {
-      setStories(JSON.parse(saved))
-    }
+    setStories(getGuestStories())
   }, [])
 
   const handleDeleteStory = (storyId: string) => {

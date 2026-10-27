@@ -1,8 +1,5 @@
 import React from 'react'
-
-interface PageWrapperProps {
-  children: React.ReactNode
-}
+import type { PageWrapperProps } from '@/types/ui'
 
 export const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
   return (

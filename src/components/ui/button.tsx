@@ -21,6 +21,8 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         'ghost-inverse':
           'text-storymixer-white hover:bg-storymixer-white/10 hover:text-storymixer-white',
+        'outline-inverse':
+          'border border-storymixer-white/40 text-storymixer-white hover:bg-storymixer-white/10 hover:text-storymixer-white',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

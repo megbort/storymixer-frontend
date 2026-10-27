@@ -1,10 +1,14 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 
 import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Home, Menu, Moon, Sun, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { AccountPanel } from '@/components/AccountPanel'
+import { signOut, useAuth } from '@/lib/auth'
 
 export default function Header() {
+  const navigate = useNavigate()
+  const { user } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (globalThis.window === undefined) {
@@ -136,6 +140,20 @@ export default function Header() {
             <span className="font-medium">My Stories</span>
           </Link>
         </nav>
+
+        <div className="p-4 pb-6 border-t border-storymixer-primary">
+          <AccountPanel
+            user={user}
+            onLogin={() => {
+              setIsOpen(false)
+              navigate({ to: '/login', search: { mode: 'login' } })
+            }}
+            onLogout={() => {
+              setIsOpen(false)
+              signOut()
+            }}
+          />
+        </div>
       </aside>
     </>
   )
