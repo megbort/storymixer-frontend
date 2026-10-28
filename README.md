@@ -24,6 +24,8 @@ I built this project to entertain my friends, kids, and family while also gettin
 
 ## Getting Started
 
+Requires Node.js 22.22.2+, 24.15+, or 26+.
+
 ```bash
 npm install
 npm run dev       # start the app
