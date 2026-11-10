@@ -6,11 +6,33 @@ import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 
+const IMAGE_KEY_PREFIX = 'storyMixer:image:'
+
 const getImageStorageKey = (storyId: string, storyText: string) =>
-  `storyMixer:image:${storyId}:${storyText}`
+  `${IMAGE_KEY_PREFIX}${storyId}:${storyText}`
 
 const getStorySaveKey = (storyId: string, storyText: string) =>
   `storyMixer:saved:${storyId}:${storyText}`
+
+const evictCachedImages = (keepKey: string) => {
+  const staleKeys = Object.keys(sessionStorage).filter(
+    (key) => key.startsWith(IMAGE_KEY_PREFIX) && key !== keepKey,
+  )
+  staleKeys.forEach((key) => sessionStorage.removeItem(key))
+}
+
+const cacheImage = (key: string, dataUrl: string) => {
+  try {
+    sessionStorage.setItem(key, dataUrl)
+  } catch {
+    try {
+      evictCachedImages(key)
+      sessionStorage.setItem(key, dataUrl)
+    } catch {
+      return
+    }
+  }
+}
 
 export const Route = createFileRoute('/results')({
   validateSearch: (search) => ({
@@ -29,7 +51,7 @@ function ResultsComponent() {
   const navigate = useNavigate()
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(null)
   const [imageError, setImageError] = useState<string | null>(null)
-  const [isQuotaError, setIsQuotaError] = useState(false)
+  const [isRateLimitError, setIsRateLimitError] = useState(false)
   const [isImageLoading, setIsImageLoading] = useState(false)
 
   const storyText = story
@@ -113,13 +135,16 @@ function ResultsComponent() {
             dangerouslyAllowBrowser: true,
           })
 
-          const prompt = `Create a fun and whimsical illustration for this story: "${storyText}"`
+          const prompt = `Create a single fun and whimsical illustration inspired by this story. Show one silly moment as one full-frame scene. Do not make a comic strip: no panels, no speech bubbles, no captions, no text or lettering of any kind. Story: "${storyText}"`
 
           const response = await openai.images.generate({
-            model: 'gpt-image-1-mini',
+            model: 'gpt-image-2.6-flare',
             prompt,
             size: '1024x1024',
             quality: 'low',
+            complexity: 'low',
+            output_format: 'webp',
+            output_compression: 80,
           })
 
           const imageBase64 = response.data?.[0]?.b64_json
@@ -127,21 +152,22 @@ function ResultsComponent() {
             throw new Error('No image generated from API')
           }
 
-          const dataUrl = `data:image/png;base64,${imageBase64}`
-          sessionStorage.setItem(imageStorageKey, dataUrl)
+          const dataUrl = `data:image/webp;base64,${imageBase64}`
           setImageDataUrl(dataUrl)
+          cacheImage(imageStorageKey, dataUrl)
         } catch (error) {
           const message =
             error instanceof Error ? error.message : 'Failed to generate image'
-          const isQuota = message.toLowerCase().includes('quota')
-          setIsQuotaError(isQuota)
+          setIsRateLimitError(
+            error instanceof Error && 'status' in error && error.status === 429,
+          )
           setImageError(message)
         } finally {
           setIsImageLoading(false)
         }
       }
 
-      generateImage()
+      void generateImage()
     }
   }, [imageStorageKey, isNewStory, story])
 
@@ -171,7 +197,7 @@ function ResultsComponent() {
       )
     }
 
-    if (isQuotaError) {
+    if (isRateLimitError) {
       return (
         <div className="flex flex-col items-center justify-center text-center gap-3 min-h-55">
           <img
@@ -246,9 +272,7 @@ function ResultsComponent() {
               <p className="font-semibold text-storymixer-grey mb-1">
                 {input.label}
               </p>
-              <p className="text-foreground text-sm">
-                {formValues[input.id]}
-              </p>
+              <p className="text-foreground text-sm">{formValues[input.id]}</p>
             </div>
           ))}
         </div>
