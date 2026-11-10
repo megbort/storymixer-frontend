@@ -14,23 +14,31 @@ const getImageStorageKey = (storyId: string, storyText: string) =>
 const getStorySaveKey = (storyId: string, storyText: string) =>
   `storyMixer:saved:${storyId}:${storyText}`
 
-const evictCachedImages = (keepKey: string) => {
-  const staleKeys = Object.keys(sessionStorage).filter(
-    (key) => key.startsWith(IMAGE_KEY_PREFIX) && key !== keepKey,
-  )
-  staleKeys.forEach((key) => sessionStorage.removeItem(key))
+const trySetItem = (key: string, value: string) => {
+  try {
+    sessionStorage.setItem(key, value)
+    return true
+  } catch {
+    return false
+  }
 }
 
 const cacheImage = (key: string, dataUrl: string) => {
-  try {
-    sessionStorage.setItem(key, dataUrl)
-  } catch {
-    try {
-      evictCachedImages(key)
-      sessionStorage.setItem(key, dataUrl)
-    } catch {
+  const staleKeys = Object.keys(sessionStorage).filter(
+    (storedKey) => storedKey.startsWith(IMAGE_KEY_PREFIX) && storedKey !== key,
+  )
+  const evictedEntries: [string, string][] = []
+
+  while (!trySetItem(key, dataUrl)) {
+    const staleKey = staleKeys.shift()
+    if (!staleKey) {
+      evictedEntries.forEach(([evictedKey, evictedValue]) =>
+        sessionStorage.setItem(evictedKey, evictedValue),
+      )
       return
     }
+    evictedEntries.push([staleKey, sessionStorage.getItem(staleKey) ?? ''])
+    sessionStorage.removeItem(staleKey)
   }
 }
 
@@ -135,7 +143,7 @@ function ResultsComponent() {
             dangerouslyAllowBrowser: true,
           })
 
-          const prompt = `Create a single fun and whimsical illustration inspired by this story. Show one silly moment as one full-frame scene. Do not make a comic strip: no panels, no speech bubbles, no captions, no text or lettering of any kind. Story: "${storyText}"`
+          const prompt = `Create a single fun and whimsical illustration inspired by this story. Show one silly moment as one full-frame scene. Do not make a comic strip: no panels, no speech bubbles, no captions, no text or lettering of any kind. Draw any people as adults, and draw animals, creatures and objects as the story describes them. Do not include children unless the story explicitly mentions them. Story: "${storyText}"`
 
           const response = await openai.images.generate({
             model: 'gpt-image-2.6-flare',
